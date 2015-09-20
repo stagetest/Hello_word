@@ -1,0 +1,24 @@
+# on importe le module Bio.SeqIO
+from Bio import SeqIO
+# compteur des séquences
+i=0
+# on crée un fichier résultats et on l'ouvre en mode ajout
+fichier = open("resultats.txt","a") 
+# on écrit dans le fichier le nom de la séquence et sa longueur dans un tableau formaté
+fichier.write("Nom de la séquence"+3*"\t"+"|\t"+"Longueur de la séquence"+"\n")  
+fichier.write(72*"-"+"\n")
+for record in SeqIO.parse("ls_orchid.fasta", "fasta"):
+    fichier.write(str(record.name)+"\t|")
+    fichier.write(2*"\t"+str(len(record))+"\n")
+    # on incrémente le nombre de séquences à chaque itération
+    i+=1
+fichier.close() 
+# Cette partie a été programmée uniquement pour pouvoir écrire au début du fichier, autrement on se serait contenté
+# d'écrire directement nombre_seq dans le fichier
+nombre_seq = ("Le nombre de séquences est : {0} \n\n" .format(i))
+fichier = open("resultats.txt", "r")
+total = nombre_seq + fichier.read()
+fichier.close()
+fichier = open("resultats.txt", "w")
+fichier.write(total)
+fichier.close()
