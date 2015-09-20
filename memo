@@ -1,0 +1,65 @@
+
+
+  J'ai utilisé deux méthodes pour lancer le projet Galaxy en utilisant un serveur local. La première consiste à 
+utiliser le fichier run.sh qui existe dans le dossier Galaxy et qui effectue la configuration de l'environnement 
+de Galaxy mais crée également un serveur en localhost sur le port 8080, l'accès donc à Galaxy peut directement 
+se faire via http://localhost:8080. Cette méthode est entièrement expliquée sur la page suivante : 
+https://wiki.galaxyproject.org/Admin/GetGalaxy
+
+  La deuxième consiste à créer un serveur local sur OS X manuellement, et de le relier ensuite au dossier Galaxy 
+en utilisant le terminal. Cette méthode présuppose donc d'avoir téléchargé le code source Galaxy. 
+Sur le terminal on entre donc les commandes suivante :
+
+  httpd -v                                   // installer Apache sur la machine
+  sudo apachectl start                       // lancer Apache
+  mkdir ~/Sites                              // créer un répertoire Sites
+  sudo nano /etc/apache2/users/USERNAME.conf // configurer le nom de l'utilisation 
+
+Là il faut copier les commandes suivantes dans l'éditeur GNU :
+ 
+  <Directory "/Users/*/Sites/">
+    Options Indexes MultiViews FollowSymLinks
+    AllowOverride All
+    Require all granted
+  </Directory>
+  
+ctrl+o ensuite ctrl+x pour sauvegarder et revenir au shell:
+  
+  sudo nano /etc/apache2/httpd.conf          // Permettre l'utilisation des fichiers du répértoire utilisateur
+
+Dans l'éditeur GNU, on décommente les lignes suivantes :
+
+  LoadModule userdir_module libexec/apache2/mod_userdir.so
+  LoadModule alias_module libexec/apache2/mod_alias.so
+  LoadModule rewrite_module libexec/apache2/mod_rewrite.so
+  LoadModule php5_module libexec/apache2/libphp5.so
+  Include /private/etc/apache2/extra/httpd-userdir.conf
+
+(On peut utiliser ctrl+w pour chercher une occurrence dans l'éditeur)
+
+ctrl+o ensuite ctrl+x pour sauvegarder et revenir au shell:
+  
+  sudo nano /etc/apache2/extra/httpd-userdir.conf
+
+Idem, on décommente cette ligne : 
+
+  Include /private/etc/apache2/users/*.conf
+  
+ctrl+o ensuite ctrl+x pour sauvegarder et revenir au shell:
+  
+  sudo apachectl restart                    // Pour redémarrer Apache
+
+Pour finir, on crée une référence au dossier galaxy comme ceci:
+
+  ln -s ~/galaxy ~/Sites/MyWebsite          // En spécifiant le chemin d'accès de galaxy
+  chmod a+rx ~/Dropbox/Projects             // Pour avoir accès à la totalité du projet
+  
+On peut maintenant ouvrir le site : http://localhost/~USERNAME/MyWebsite (en remplaçant USERNAME par le
+nom d'utilisation. 
+
+On obtient une page index où l'on peut accéder aux différents fichiers du projets. 
+On ouvrant la page Welcome du projet, le css n'y est pas introduit, j'ignore pourquoi.
+
+
+
+
