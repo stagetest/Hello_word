@@ -7,7 +7,7 @@ fichier = open("resultats.txt","a")
 # on écrit dans le fichier le nom de la séquence et sa longueur dans un tableau formaté
 fichier.write("Nom de la séquence"+3*"\t"+"|\t"+"Longueur de la séquence"+"\n")  
 fichier.write(72*"-"+"\n")
-for record in SeqIO.parse("ls_orchid.fasta", "fasta"):
+for record in SeqIO.parse("nom_du_fichier.fasta", "fasta"):
     fichier.write(str(record.name)+"\t|")
     fichier.write(2*"\t"+str(len(record))+"\n")
     # on incrémente le nombre de séquences à chaque itération
