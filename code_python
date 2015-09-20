@@ -1,3 +1,6 @@
+#!/usr/bin/python  ## Shebang line, please. See http://www.in-ulm.de/~mascheck/various/shebang/
+# coding: latin-1  ## to avoid interpreting issues: see https://www.python.org/dev/peps/pep-0263/
+import sys # you will most likely need it...
 # on importe le module Bio.SeqIO
 from Bio import SeqIO
 # compteur des séquences
@@ -7,6 +10,7 @@ fichier = open("resultats.txt","a")
 # on écrit dans le fichier le nom de la séquence et sa longueur dans un tableau formaté
 fichier.write("Nom de la séquence"+3*"\t"+"|\t"+"Longueur de la séquence"+"\n")  
 fichier.write(72*"-"+"\n")
+
 for record in SeqIO.parse("nom_du_fichier.fasta", "fasta"):
     fichier.write(str(record.name)+"\t|")
     fichier.write(2*"\t"+str(len(record))+"\n")
